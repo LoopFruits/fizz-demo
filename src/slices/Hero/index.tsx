@@ -1,13 +1,11 @@
 "use client"; // client component is used in this file to run on client side
 
-
-
-
 import { asText, Content } from "@prismicio/client";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
 import { Bounded } from "@/app/components/Bounded";
@@ -15,7 +13,7 @@ import Button from "@/app/components/Button";
 import { TextSplitter } from "@/app/components/TextSplitter";
 
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 /**
  * Props for `Hero`.
  */
@@ -57,6 +55,39 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       duration: 0.6,
     })
 
+    const scrollTl= gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5,
+      },
+    });
+
+    scrollTl
+      .fromTo("body",{
+        backgroundColor: "#FDE047",
+
+      },{
+        backgroundColor: "#D9F99D",
+        overwrite: "auto",
+      },
+      1, //start time of animation
+    ).from(".text-side-heading .split-char", { //split-char allows animation of each letter
+      scale: 1.3,
+      y: 40,
+      rotate: -25,
+      opacity: 0,
+      stagger: 0.1,
+      delay: 0.5,
+      ease: "back.out(3)",
+      duration: 0.5,
+    })
+    .from(".text-side-body", {
+      y: 20,
+      opacity: 0,
+      duration: 0.5, 
+    });
 
   });
 
