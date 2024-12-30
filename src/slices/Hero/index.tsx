@@ -32,12 +32,31 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
     introTl
       .set(".hero", {opacity: 1})
       .from(".hero-header-word", {
-      duration:0.5,
-      scale:3,
-      opacity:0,
+      duration: 0.5,
+      scale: 3,
+      opacity: 0,
       ease: "power4.in",
-      delay:0.3,
-    });
+      delay: 0.3,
+      stagger: 1, // loads one element by however long
+    })
+
+    .from(".hero-subheading", {
+      opacity: 0,
+      y: 30,
+    }, 
+    "+=0.6", //same as delay
+    )
+
+    .from(".hero-body",{
+      opacity: 0,
+      y: 10,
+    })
+    .from(".hero-button",{
+      opacity: 0,
+      y: 10,
+      duration: 0.6,
+    })
+
 
   });
 
@@ -57,10 +76,10 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
               className="hero-header-word"/>
               {/*Function returns string instead of h1 within itself*/}
           </h1>
-          <div className="hero subheading mt-12 text-5xl font-semibold text-sky-950 lg:text-6xl">
+          <div className="hero-subheading mt-12 text-5xl font-semibold text-sky-950 lg:text-6xl">
             <PrismicRichText field={slice.primary.subheading} />
           </div>
-          <div className="hero body text-2xl font-normal text-sky-950">
+          <div className="hero-body text-2xl font-normal text-sky-950">
             <PrismicRichText field={slice.primary.body} />
           </div>
           <Button 
