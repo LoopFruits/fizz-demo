@@ -2,8 +2,8 @@
 import React, { forwardRef, ReactNode } from 'react'
 import { Float } from '@react-three/drei'
 import { SodaCan, SodaCanProps } from './SodaCan'
-import { Group } from 'three/examples/jsm/libs/tween.module.js';
-import * as THREE from 'three';
+import { Group } from 'three';
+
 
 
 type FloatingCanProps = {
@@ -29,7 +29,7 @@ children,
     
 ) => {
   return (
-    <group ref={ref as React.Ref<THREE.Group>} {...props}>
+    <group ref={ref} {...props}>
         <Float
         speed={floatSpeed} // Animation speed
         rotationIntensity={rotationIntensity} // XYZ rotation intensity
