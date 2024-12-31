@@ -122,3 +122,9 @@ limitations under the License.
 [prismic-sign-up]: https://prismic.io/dashboard/signup
 [nextjs]: https://nextjs.org/
 [live-demo]: https://nextjs-starter-prismic-minimal.vercel.app/
+
+
+Project Takeaways: 
+    implementing threejs
+    prismic's CMS
+    <group></group>:  works similar to a div allows the movement of children 
