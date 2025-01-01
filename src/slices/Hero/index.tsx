@@ -13,6 +13,9 @@ import Button from "@/app/components/Button";
 import { TextSplitter } from "@/app/components/TextSplitter";
 import { View } from "@react-three/drei";
 import Scene from "./Scene";
+import { Bubbles } from "@/app/components/Bubbles";
+import { useStore } from "@/hooks/useStore";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -26,13 +29,18 @@ export type HeroProps = SliceComponentProps<Content.HeroSlice>;
  */
 const Hero = ({ slice }: HeroProps): JSX.Element => {
 
-  useGSAP(()=> {
+
+  const ready = useStore((state)=> state.ready);
+  const isDesktop = useMediaQuery("(min-width:768px)", true); //hiding 3d cans on smaller screens
+  
+  useGSAP(()=> { 
+    if(!ready && isDesktop) return; //if app isnt ready we don't render animation
+
     const introTl = gsap.timeline();
 
     introTl
       .set(".hero", {opacity: 1})
       .from(".hero-header-word", {
-      duration: 0.5,
       scale: 3,
       opacity: 0,
       ease: "power4.in",
@@ -91,7 +99,8 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       duration: 0.5, 
     });
 
-  });
+  },
+  { dependencies: [ready, isDesktop] },);
 
   return (
     <Bounded
@@ -99,9 +108,12 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       data-slice-variation={slice.variation}
       className="hero opacity-0"
     >
-      <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] hidden h-screen w-screen md:block">
-        <Scene />
-      </View>
+      {isDesktop && (
+        <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] hidden h-screen w-screen md:block">
+          <Scene />
+          <Bubbles count={300} speed={1} repeat={true}/>
+        </View>
+      )}
     <div className="grid">
       <div className="grid h-screen place-items-center">
         <div className="grid auto-rows-min place-items-center text-center">
