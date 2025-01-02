@@ -18,7 +18,7 @@ const SkyDive = ({ slice }: SkyDiveProps): JSX.Element => {
     <Bounded
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="sky-dive h-screen"
+      className="skydive h-screen"
     >
       <h2 className="sr-only">{slice.primary.sentence}</h2>
       <View className="h-screen w-screen">

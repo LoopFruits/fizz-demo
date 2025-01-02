@@ -1,13 +1,15 @@
 "use client";
 
+import { Content } from "@prismicio/client";
+import { Cloud, Clouds, Environment, Text } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import { Group } from "three";
-import { Cloud, Clouds, Environment, Text } from "@react-three/drei";
-import { Content } from "@prismicio/client";
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import FloatingCan from "@/app/components/FloatingCan";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
@@ -37,7 +39,7 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
 
     const getXYPositions = (distance: number) => ({
         x: getXPosition(distance),
-        y: getYPosition(-1 * distance)
+        y: getYPosition(-1 * distance),
     });
 
     useGSAP(() => {
@@ -56,11 +58,13 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
         gsap.set(canRef.current.position, { 
             ...getXYPositions(-4),
         });
+
         //set initial position of words
-        gsap.set
-            wordsRef.current.children.map((word => word.position), {
-            ...getXYPositions(7), z: 2 },
+        gsap.set(
+            wordsRef.current.children.map((word) => word.position),
+            { ...getXYPositions(7), z: 2 },
         );
+      
 
         //Spinning animation for can
         gsap.to(canRef.current.rotation, {
@@ -72,10 +76,9 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
 
         // Initiate cloud movement
         const DISTANCE = 15;
-        const DURATION = 6
+        const DURATION = 6;
 
-        gsap.set([cloud2Ref.current.position, cloud1Ref.current.position],
-        {
+        gsap.set([cloud2Ref.current.position, cloud1Ref.current.position],{
             ...getXYPositions(DISTANCE),
         });
 
@@ -117,14 +120,12 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
             z: 0, 
             duration: 0.3
         }, 0) //ensures action occurs at the start of the timeline
-
         .to(canRef.current.position, {
             x: 0,
             y: 0,
             duration: 0.3,
             ease: "back.out(1.7)",
         })
-
         .to(
             wordsRef.current.children.map((word) => word.position),
             {
@@ -135,8 +136,16 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
                 stagger: 0.3,
             },
             0,
-        )
-
+        )//can flys away
+        .to(canRef.current.position, {
+            ...getXYPositions(4),
+            duration: 0.5,
+            ease: "back.in(1.7)",
+        })
+        .to(cloudsRef.current.position,{
+            z: 7,
+            duration: 0.5,
+        });
     });
     
 
@@ -152,7 +161,7 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
             floatIntensity={3}
             floatSpeed={3}
             >
-
+                <pointLight intensity={30} color="#8C0413" decay={0.9}/>
             </FloatingCan>
         </group>
 
