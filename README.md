@@ -128,3 +128,8 @@ Project Takeaways:
     implementing threejs
     prismic's CMS
     <group></group>:  works similar to a div allows the movement of children 
+
+
+Upcoming features 
+
+purchase button for drinks 

@@ -74,7 +74,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
           backgroundColor: FLAVORS[nextIndex].color,
           fill: FLAVORS[nextIndex].color,
           ease: "power2.inOut",
-          duration: 1
+          duration: 1 //duration of spinning animation 
         },
         0,
       )
@@ -83,7 +83,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
         {},
         {onStart: () => setCurrentFlavorIndex(nextIndex)},
         0.5)
-      .to(".text-wrapper", { duration: 0.2, y: 0, opacity: 1}, 0.5)
+      .to(".text-wrapper", { duration: 0.2, y: 0, opacity: 1}, 0.7)
     }
 
 
@@ -125,7 +125,7 @@ const Carousel = ({ slice }: CarouselProps): JSX.Element => {
           <Environment 
             files="/fonts/hdr/lobby.hdr" 
             environmentIntensity= { 0.6 }  
-            environmentRotation={[0, 3, 0]} 
+            environmentRotation= {[0, 3, 0]} 
           />
           <directionalLight intensity={6} position={[0, 1, 1]} />
         </View>
@@ -172,5 +172,4 @@ function ArrowButton({
       <span className="sr-only">{label}</span>
     </button>
   );
-
 }
