@@ -52,7 +52,7 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       opacity: 0,
       y: 30,
     }, 
-    "+=0.6", //same as delay
+    "+=0.8", //same as delay
     )
 
     .from(".hero-body",{
@@ -78,7 +78,8 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       .fromTo("body",{
         backgroundColor: "#FDE047",
 
-      },{
+      },
+      {
         backgroundColor: "#D9F99D",
         overwrite: "auto",
       },
@@ -89,14 +90,12 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       rotate: -25,
       opacity: 0,
       stagger: 0.1,
-      delay: 0.5,
       ease: "back.out(3)",
       duration: 0.5,
     })
     .from(".text-side-body", {
       y: 20,
-      opacity: 0,
-      duration: 0.5, 
+      opacity: 0, 
     });
 
   },
@@ -137,7 +136,7 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
         </div>
       </div>
   
-      <div className="text-side relative z-[80] grid h-screen items-center gap-4 md:grid-cols=2">
+      <div className="text-side relative z-[80] grid h-screen items-center gap-4 md:grid-cols-2">
         <PrismicNextImage 
           className="w-full md:hidden"
           field={slice.primary.cans_image}/>
