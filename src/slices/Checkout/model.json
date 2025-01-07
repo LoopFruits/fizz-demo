@@ -1,0 +1,16 @@
+{
+  "id": "checkout",
+  "type": "SharedSlice",
+  "name": "Checkout",
+  "description": "Checkout",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": ""
+    }
+  ]
+}

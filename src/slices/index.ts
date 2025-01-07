@@ -6,6 +6,7 @@ export const components = {
   alternating_text: dynamic(() => import("./AlternatingText")),
   big_text: dynamic(() => import("./BigText")),
   carousel: dynamic(() => import("./Carousel")),
+  checkout: dynamic(() => import("./Checkout")),
   hero: dynamic(() => import("./Hero")),
   sky_dive: dynamic(() => import("./SkyDive")),
 };

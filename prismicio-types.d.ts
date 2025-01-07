@@ -4,6 +4,71 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+type CheckoutDocumentDataSlicesSlice = CheckoutSlice;
+
+/**
+ * Content for Checkout documents
+ */
+interface CheckoutDocumentData {
+  /**
+   * Slice Zone field in *Checkout*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: checkout.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<CheckoutDocumentDataSlicesSlice> /**
+   * Meta Title field in *Checkout*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: checkout.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Checkout*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: checkout.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Checkout*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: checkout.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Checkout document from Prismic
+ *
+ * - **API ID**: `checkout`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CheckoutDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<CheckoutDocumentData>,
+    "checkout",
+    Lang
+  >;
+
 type PageDocumentDataSlicesSlice =
   | BigTextSlice
   | AlternatingTextSlice
@@ -81,7 +146,7 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-export type AllDocumentTypes = PageDocument;
+export type AllDocumentTypes = CheckoutDocument | PageDocument;
 
 /**
  * Item in *AlternatingText → Default → Primary → Text Group*
@@ -238,6 +303,36 @@ type CarouselSliceVariation = CarouselSliceDefault;
 export type CarouselSlice = prismic.SharedSlice<
   "carousel",
   CarouselSliceVariation
+>;
+
+/**
+ * Default variation for Checkout Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CheckoutSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *Checkout*
+ */
+type CheckoutSliceVariation = CheckoutSliceDefault;
+
+/**
+ * Checkout Shared Slice
+ *
+ * - **API ID**: `checkout`
+ * - **Description**: Checkout
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CheckoutSlice = prismic.SharedSlice<
+  "checkout",
+  CheckoutSliceVariation
 >;
 
 /**
@@ -430,6 +525,9 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      CheckoutDocument,
+      CheckoutDocumentData,
+      CheckoutDocumentDataSlicesSlice,
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
@@ -446,6 +544,9 @@ declare module "@prismicio/client" {
       CarouselSliceDefaultPrimary,
       CarouselSliceVariation,
       CarouselSliceDefault,
+      CheckoutSlice,
+      CheckoutSliceVariation,
+      CheckoutSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
